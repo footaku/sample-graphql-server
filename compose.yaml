@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.31-debian
+    platform: linux/x86_64
+    environment:
+      MYSQL_USER: graphql-user
+      MYSQL_PASSWORD: graphql-pass
+      MYSQL_ROOT_PASSWORD: graphql-root-pass
+      MYSQL_DATABASE: graphql
+      TZ: UTC
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u$${MYSQL_USER}", "-p$${MYSQL_PASSWORD}"]
+      retries: 10
+      timeout: 3s
+      interval: 3s
+      start_period: 10s
+    volumes:
+      - ./src/test/resources/mysql-default-conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./database:/docker-entrypoint-initdb.d
+    ports:
+      - "33306:3306"

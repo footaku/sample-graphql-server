@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:33306/graphql
+    username: graphql-user
+    password: graphql-pass
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 30000
+      minimum-idle: 50
+      maximum-pool-size: 100
+      idle-timeout: 600000   # 10min
+      keepalive-time: 300000 #  5min
+      max-lifetime: 1800000  # 30min
+      read-only: true
+  graphql:
+    graphiql:
+      enabled: true
+    schema:
+      printer:
+        enabled: true
